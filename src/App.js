@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Route, BrowserRouter as Router, Routes, useLocation } from 'react-router-dom'; // Correct import
+import App from './ExpenseTracker';
+import SignInSide from './components/SignIn';
+import ForgotPassword from './components/ForgotPassword';
+import SignUp from './components/SignUp';
+import Dashboard from './components/Dashboard';
 
-function App() {
+const ExpenseTracker = () => {
+  // const { pathname } = useLocation();
+  // console.log('pathname: ',pathname)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <Router>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 
-export default App;
+      </Routes>
+    </Router>
+  );
+};
+
+export default ExpenseTracker;
