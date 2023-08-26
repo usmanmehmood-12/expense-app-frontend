@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Container,
   Typography,
@@ -6,11 +6,11 @@ import {
   Button,
   Paper,
   Box,
-} from '@mui/material';
-import axios from 'axios';
+} from "@mui/material";
+import axios from "axios";
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isEmailSent, setIsEmailSent] = useState(false);
 
   const handleEmailChange = (event) => {
@@ -19,14 +19,13 @@ const ForgotPassword = () => {
 
   const handleSendEmail = async () => {
     try {
-      await axios.post('http://localhost:8082/users/reset-password', {
-        email: email, 
+      await axios.post("http://localhost:8082/users/reset-password", {
+        email: email,
       });
 
       setIsEmailSent(true);
     } catch (error) {
-      console.error('Error sending reset email:', error);
-
+      console.error("Error sending reset email:", error);
     }
   };
 
@@ -34,13 +33,13 @@ const ForgotPassword = () => {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
           mt: 8,
         }}
       >
-        <Paper elevation={3} style={{ padding: '20px', minWidth: '300px' }}>
+        <Paper elevation={3} style={{ padding: "20px", minWidth: "300px" }}>
           <Typography variant="h5" align="center" gutterBottom>
             Forgot Password
           </Typography>

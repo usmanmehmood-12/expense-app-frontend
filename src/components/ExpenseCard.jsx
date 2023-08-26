@@ -20,11 +20,11 @@ const CardHeader = styled(CardContent)`
   text-align: center;
 `;
 
-const IncomeAmount = styled(Typography)`
-  color: #0eaf52;
-  font-size: 24px;
-  font-weight: bold;
-`;
+// const IncomeAmount = styled(Typography)`
+//   color: #0eaf52;
+//   font-size: 24px;
+//   font-weight: bold;
+// `;
 
 const ExpenseAmount = styled(Typography)`
   color: #e74c3c;
@@ -46,7 +46,7 @@ const ExpenseCard = () => {
       <StyledCard>
         <CardHeader>
           <Typography variant="subtitle1" color="textSecondary">
-           Total Expenses
+            Total Expenses
           </Typography>
           <ExpenseAmount>$15</ExpenseAmount>
         </CardHeader>

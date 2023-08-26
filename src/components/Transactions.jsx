@@ -1,7 +1,16 @@
-import React from 'react';
-import { Box, Divider, IconButton, List, ListItem, ListItemText, Typography, styled } from '@mui/material';
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import React from "react";
+import {
+  Box,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+  styled,
+} from "@mui/material";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 const StyledBox = styled(Box)`
   padding: 20px;
@@ -25,9 +34,7 @@ const Expense = styled(ListItemText)`
   font-weight: bold;
 `;
 
-const Transactions = ({ transactions, onDelete }) => {
-
-  
+const Transactions = ({ transactions, onDelete, onEdit }) => {
   return (
     <StyledBox>
       <Typography variant="h5">Transaction History</Typography>
@@ -35,20 +42,22 @@ const Transactions = ({ transactions, onDelete }) => {
       <List>
         {transactions.map((transaction) => (
           <TransactionItem key={transaction.id}>
-            <ListItemText primary={transaction.description} secondary={transaction.amount < 0 ? 'Expense' : 'Income'} />
+            <ListItemText
+              primary={transaction.description}
+              secondary={transaction.amount < 0 ? "Expense" : "Income"}
+            />
             {transaction.amount < 0 ? (
               <Expense>{`$${Math.abs(transaction.amount)}`}</Expense>
             ) : (
               <Income>{`$${transaction.amount}`}</Income>
             )}
-            <IconButton  onClick={() => onDelete(transaction.id)}>
+            <IconButton onClick={() => onDelete(transaction.id)}>
               <DeleteOutlinedIcon />
             </IconButton>
 
-            <IconButton>
+            <IconButton onClick={() => onEdit(transaction)}>
               <EditOutlinedIcon />
             </IconButton>
-
           </TransactionItem>
         ))}
       </List>

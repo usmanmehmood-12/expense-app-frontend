@@ -1,9 +1,5 @@
-import {
-  styled,
-  Container,
-} from '@mui/material';
-import SignInSide from './components/SignIn';
-
+import { styled, Container } from "@mui/material";
+import SignInSide from "./components/SignIn";
 
 const MainContainer = styled(Container)`
   background-color: #f3f5f7;
@@ -12,10 +8,9 @@ const MainContainer = styled(Container)`
 `;
 
 function App() {
-
   return (
     <MainContainer>
-      <SignInSide/>
+      <SignInSide />
     </MainContainer>
   );
 }

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, styled } from '@mui/material';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { Box, Button, TextField, Typography, styled } from "@mui/material";
+import axios from "axios";
 
 const Container = styled(Box)`
   display: flex;
@@ -31,11 +31,16 @@ const AddButton = styled(Button)`
   }
 `;
 
-const NewTransaction = ({ addTransaction }) => {
-
-  const [description, setDescription] = useState('');
-  const [amount, setAmount] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+const NewTransaction = ({
+  addTransaction,
+  selectedTransaction,
+  isEditing,
+  setIsEditing,
+  editTransaction,
+}) => {
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
@@ -46,9 +51,8 @@ const NewTransaction = ({ addTransaction }) => {
   };
 
   const handleSubmit = async () => {
-    if (description.trim() === '' || amount.trim() === '') {
-      console.log('Both description and amount are required.');
-      setErrorMessage('Please fill in both description and amount.');
+    if (description.trim() === "" || amount.trim() === "") {
+      setErrorMessage("Please fill in both description and amount.");
       return; // Exit the function if either field is empty
     }
     const transactionData = {
@@ -56,44 +60,108 @@ const NewTransaction = ({ addTransaction }) => {
       amount: amount,
     };
 
-    console.log('transactionData: ',transactionData)
     try {
-      const userId= localStorage.getItem('user')
-      const response = await axios.post(`http://localhost:8082/expenses/${userId}`
-      ,transactionData
+      const userId = localStorage.getItem("user");
+      const response = await axios.post(
+        `http://localhost:8082/expenses/${userId}`,
+        transactionData
       );
-      console.log('new transaction response',response)
-      if (response.status===201) {
-        console.log('inside new transaction 201')
-        // Handle success, maybe show a success message
+
+      if (response.status === 201) {
+
         addTransaction({
-          id: response.data.id, // Assuming the response contains the ID of the new transaction
+          id: response.data.id,
           description: description,
           amount: parseFloat(amount),
         });
 
-        setDescription('');
-        setAmount('');
-
+        setDescription("");
+        setAmount("");
       } else {
-        // Handle errors, show an error message or perform appropriate actions
+        // Handle errors, show an error message or perform appropriate action
       }
     } catch (error) {
-      console.error('Error submitting transaction:', error);
-      // Handle error, show an error message or perform appropriate actions
+
+      // Handle error, show an error message or perform appropriate action
     }
   };
-  
+
+  const handleEditSubmit = async () => {
+
+    if (description.trim() === "" || amount.trim() === "") {
+      setErrorMessage("Please fill in both description and amount.");
+      return;
+    }
+
+    const updatedTransaction = {
+      description: description,
+      amount: amount,
+    };
+
+    try {
+      const response = await axios.put(
+        `http://localhost:8082/expenses/${selectedTransaction.id}`,
+        updatedTransaction
+      );
+
+      if (response.status === 200) {
+        // Update the transaction in the state
+        // Reset form fields and exit edit mode
+        setIsEditing(false);
+        const editedTransactionData = {
+          id: response.data.id,
+          description: description,
+          amount: amount,
+        };
+
+        editTransaction(editedTransactionData);
+      } else {
+        // Handle errors
+      }
+    } catch (error) {
+      // Handle error
+    }
+  };
+  useEffect(() => {
+    if (isEditing && selectedTransaction) {
+      setDescription(selectedTransaction.description);
+      setAmount(selectedTransaction.amount);
+    } else {
+      setDescription("");
+      setAmount("");
+    }
+  }, [isEditing, selectedTransaction]);
 
   return (
     <Container>
-      <Typography variant="h5">New Expense</Typography>
-      <StyledTextField label="Enter expense description" variant="outlined" value={description}
-        onChange={handleDescriptionChange} />
-      <StyledTextField label="Enter amount" variant="outlined" value={amount}
-        onChange={handleAmountChange} />
-        {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-      <AddButton  variant="contained" onClick={handleSubmit}>Add Transaction</AddButton>
+      <Typography variant="h5">
+        {isEditing ? "Edit Expense" : "Add Expense"}
+      </Typography>
+      <StyledTextField
+        label="Enter expense description"
+        variant="outlined"
+        value={description}
+        onChange={handleDescriptionChange}
+      />
+      <StyledTextField
+        label="Enter amount"
+        variant="outlined"
+        value={amount}
+        onChange={handleAmountChange}
+      />
+      {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
+
+      <AddButton
+        variant="contained"
+        onClick={isEditing ? handleEditSubmit : handleSubmit}
+      >
+        {isEditing ? "Edit Expense" : "Add Expense"}
+      </AddButton>
+      {isEditing && (
+        <Button variant="outlined" onClick={() => setIsEditing(false)}>
+          Cancel Edit
+        </Button>
+      )}
     </Container>
   );
 };

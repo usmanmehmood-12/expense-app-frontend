@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import '../App.css';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "../App.css";
 import {
   Typography,
   styled,
@@ -9,12 +9,10 @@ import {
   Container,
   Paper,
   Button,
-} from '@mui/material';
-import Balance from './Balance';
-import ExpenseCard from './ExpenseCard';
-import NewTransaction from './NewTransaction';
-import Transactions from './Transactions';
-
+} from "@mui/material";
+import ExpenseCard from "./ExpenseCard";
+import NewTransaction from "./NewTransaction";
+import Transactions from "./Transactions";
 
 const MainContainer = styled(Container)`
   background-color: #f3f5f7;
@@ -40,57 +38,78 @@ const Header = styled(Typography)`
 `;
 
 function Dashboard() {
+  const [transactions, setTransactions] = useState([]);
 
-  
-    const [transactions, setTransactions] = useState([]);
-      
-    useEffect(() => {
-        fetchTransactions();
-      }, []);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
-      async function fetchTransactions() {
-        try {
-          const userId = localStorage.getItem('user');
-          const response = await axios.get(`http://localhost:8082/expenses/${userId}`);
-          
-          if (response.status === 200) {
-            console.log('incoming transactions: ',response.data)
-            setTransactions(response.data);
-          }
-        } catch (error) {
-          console.error('Error fetching transactions:', error);
-        }
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
+  async function fetchTransactions() {
+    try {
+      const userId = localStorage.getItem("user");
+      const response = await axios.get(
+        `http://localhost:8082/expenses/${userId}`
+      );
+
+      if (response.status === 200) {
+        setTransactions(response.data);
       }
-      const addTransaction = (newTransaction) => {
-        setTransactions([...transactions, newTransaction]);
-      };
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  }
+  const addTransaction = (newTransaction) => {
+    setTransactions([...transactions, newTransaction]);
+  };
 
-      const handleLogout = () => {
-        // Assuming you want to clear the user data from localStorage and navigate to a login page
-        localStorage.removeItem('user'); // Clear user data from localStorage
-        window.location.href=('http://localhost:3000'); // Navigate to the login page
-      };
-      
-      const handleDeleteTransaction = async(transactionId) => {
+  const handleLogout = () => {
+    // clear the user data from localStorage and navigate to a login page
+    localStorage.removeItem("user"); 
+    window.location.href = "http://localhost:3000"; // Navigate to the login page
+  };
 
-        await axios.delete(`http://localhost:8082/expenses/${transactionId}`)
-        .then(response=>{
-            console.log('delete response: ',response)
-        const updatedTransactions = transactions.filter(transaction => transaction.id !== transactionId);
+  const handleDeleteTransaction = async (transactionId) => {
+
+    await axios
+      .delete(`http://localhost:8082/expenses/${transactionId}`)
+      .then((response) => {
+        const updatedTransactions = transactions.filter(
+          (transaction) => transaction.id !== transactionId
+        );
         setTransactions(updatedTransactions);
-        alert(response.data.message)
-        })
-      };
-      
+        alert(response.data.message);
+      });
+  };
+
+  const handleEditTransaction = async (transaction) => {
+
+    setSelectedTransaction(transaction);
+    setIsEditing(true);
+  };
+
+  const editTransaction = (editedTransaction) => {
+    const updatedTransactions = transactions.map((transaction) => {
+      if (transaction.id === editedTransaction.id) {
+        return editedTransaction;
+      }
+      return transaction;
+    });
+
+    setTransactions(updatedTransactions);
+  };
+
   return (
     <MainContainer>
       <Grid container spacing={2}>
-        <Grid item xs={12}>            
+        <Grid item xs={12}>
           <CenteredContent>
             <Header>Expense Tracker</Header>
             <Button
               variant="outlined"
-              style={{ marginLeft: 'auto' }}
+              style={{ marginLeft: "auto" }}
               onClick={handleLogout}
             >
               Logout
@@ -98,14 +117,24 @@ function Dashboard() {
           </CenteredContent>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Paper elevation={3} style={{ padding: '20px' }}>
+          <Paper elevation={3} style={{ padding: "20px" }}>
             <ExpenseCard />
-            <NewTransaction addTransaction={addTransaction} />
+            <NewTransaction
+              addTransaction={addTransaction}
+              selectedTransaction={selectedTransaction}
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              editTransaction={editTransaction}
+            />
           </Paper>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Paper elevation={3} style={{ padding: '20px' }}>
-            <Transactions transactions={transactions} onDelete={handleDeleteTransaction}  />
+          <Paper elevation={3} style={{ padding: "20px" }}>
+            <Transactions
+              transactions={transactions}
+              onDelete={handleDeleteTransaction}
+              onEdit={handleEditTransaction}
+            />
           </Paper>
         </Grid>
       </Grid>
