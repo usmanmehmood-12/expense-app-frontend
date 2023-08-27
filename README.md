@@ -40,3 +40,8 @@ The Expense Calculator Application Frontend is a user expense calculator applica
 2) Include filters to allow users to sort and search for expenses by date, category, or description.
 
 ### ***Authentication & CRUD is Implemented***
+
+## Screenshots of the application
+* 1)User Signin:
+* ![Sigin](https://github.com/usmanmehmood-12/expense-app-frontend/assets/67166880/fc9801da-c6d4-4069-b014-313d07d43145)
+
