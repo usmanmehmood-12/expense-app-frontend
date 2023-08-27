@@ -19,10 +19,21 @@ The Expense Calculator Application Frontend is a user expense calculator applica
 ### ***Features:***
 
 * **Web Frontend**
-1) A responsive web application using React.js
+1) Create a responsive web application using React.js.
+2)  Design an intuitive and user-friendly user interface.
+3)  Ensure that the web application communicates effectively with the chosen backend technology (Node.js).
 
 * **User Authentication**
-
-* **Expense Management** is used for developing the workflows.
+1) Implement user registration functionality, including user information collection (name, email, password).
+2) Create a sign-up page for new users.
+3) Create a login page for registered users.
+4) Implement a password reset feature allowing users to reset their passwords via email.
+   
+* **Expense Management**
+1) Develop a user-friendly interface for users to add, edit, and delete expenses.
+2) Implement a data structure/database to store user-specific expense records.
+3) Ensure that expenses are associated with the logged-in user.
 
 * **Expense Listing**
+1) Create a page where users can view a list of their own expenses.
+2) Include filters to allow users to sort and search for expenses by date, category, or description.
