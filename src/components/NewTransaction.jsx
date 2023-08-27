@@ -73,6 +73,7 @@ const NewTransaction = ({
           id: response.data.id,
           description: description,
           amount: parseFloat(amount),
+          updatedAt:response.data.updatedAt
         });
 
         setDescription("");
@@ -103,7 +104,7 @@ const NewTransaction = ({
         `http://localhost:8082/expenses/${selectedTransaction.id}`,
         updatedTransaction
       );
-
+      
       if (response.status === 200) {
         // Update the transaction in the state
         // Reset form fields and exit edit mode
@@ -112,6 +113,7 @@ const NewTransaction = ({
           id: response.data.id,
           description: description,
           amount: amount,
+          updatedAt:response.data.updatedAt
         };
 
         editTransaction(editedTransactionData);
