@@ -20,11 +20,6 @@ const CardHeader = styled(CardContent)`
   text-align: center;
 `;
 
-// const IncomeAmount = styled(Typography)`
-//   color: #0eaf52;
-//   font-size: 24px;
-//   font-weight: bold;
-// `;
 
 const ExpenseAmount = styled(Typography)`
   color: #e74c3c;
@@ -32,23 +27,21 @@ const ExpenseAmount = styled(Typography)`
   font-weight: bold;
 `;
 
-const ExpenseCard = () => {
+const ExpenseCard = ({transactions}) => {
+  console.log('Expense transactions: ',transactions)
+  
+  const totalExpenses = transactions.reduce((total, transaction) => {
+    return total + Math.abs(transaction.amount);
+  }, 0);
+
   return (
     <Container>
-      {/* <StyledCard>
-        <CardHeader>
-          <Typography variant="subtitle1" color="textSecondary">
-            Income
-          </Typography>
-          <IncomeAmount>$25</IncomeAmount>
-        </CardHeader>
-      </StyledCard> */}
       <StyledCard>
         <CardHeader>
           <Typography variant="subtitle1" color="textSecondary">
             Total Expenses
           </Typography>
-          <ExpenseAmount>$15</ExpenseAmount>
+          <ExpenseAmount>{`$${totalExpenses}`}</ExpenseAmount>
         </CardHeader>
       </StyledCard>
     </Container>

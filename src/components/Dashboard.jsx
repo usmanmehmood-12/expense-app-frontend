@@ -118,7 +118,7 @@ function Dashboard() {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Paper elevation={3} style={{ padding: "20px" }}>
-            <ExpenseCard />
+            <ExpenseCard transactions={transactions}/>
             <NewTransaction
               addTransaction={addTransaction}
               selectedTransaction={selectedTransaction}
