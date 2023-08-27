@@ -64,7 +64,7 @@ The Expense Calculator Application Frontend is a user expense calculator applica
 * ![delete expense](https://github.com/usmanmehmood-12/expense-app-frontend/assets/67166880/756ec06e-fd64-4b55-a632-9412a6afbcfb)
 
 * 8) Expense deleted:
-![deleted expense](https://github.com/usmanmehmood-12/expense-app-frontend/assets/67166880/14642618-f3b7-481c-9704-a1ba99b01c80)
+* ![deleted expense](https://github.com/usmanmehmood-12/expense-app-frontend/assets/67166880/14642618-f3b7-481c-9704-a1ba99b01c80)
 
 * 8) Forgot Password:
-![forgot password](https://github.com/usmanmehmood-12/expense-app-frontend/assets/67166880/c6e4e9f4-4ab9-4bf2-85c5-e31959ef9b67)
+* ![forgot password](https://github.com/usmanmehmood-12/expense-app-frontend/assets/67166880/c6e4e9f4-4ab9-4bf2-85c5-e31959ef9b67)
