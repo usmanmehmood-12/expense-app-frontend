@@ -37,3 +37,5 @@ The Expense Calculator Application Frontend is a user expense calculator applica
 * **Expense Listing**
 1) Create a page where users can view a list of their own expenses.
 2) Include filters to allow users to sort and search for expenses by date, category, or description.
+
+### ***Authentication & CRUD is Implemented ***
